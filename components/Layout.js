@@ -5,7 +5,7 @@ import { useRouter, usePathname } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Badge } from '@/components/ui/badge';
-import { Calendar, Menu, Home, Clock, History, Users, Settings, LogOut } from 'lucide-react';
+import { Calendar, Menu, Home, Clock, History, Users, Settings, LogOut, UserCheck } from 'lucide-react';
 import Link from 'next/link';
 
 export default function Layout({ children }) {
@@ -20,6 +20,7 @@ export default function Layout({ children }) {
 
   const isActive = (path) => pathname === path;
 
+  // Navigation items pour tous les utilisateurs
   const navItems = [
     { path: '/dashboard', label: 'Tableau de bord', icon: Home },
     { path: '/leaves/new', label: 'Nouvelle demande', icon: Clock },
@@ -27,6 +28,13 @@ export default function Layout({ children }) {
     { path: '/team', label: 'Équipe', icon: Users },
     { path: '/profile', label: 'Profil', icon: Settings },
   ];
+
+  // Ajouter la page manager pour les managers et HR
+  const managerNavItems = [
+    { path: '/manager', label: 'Validation congés', icon: UserCheck },
+  ];
+
+  const allNavItems = [...navItems, ...managerNavItems];
 
   const NavLink = ({ item, mobile = false }) => (
     <Link
@@ -80,7 +88,7 @@ export default function Layout({ children }) {
 
               {/* Navigation */}
               <nav className="flex-1 space-y-2">
-                {navItems.map((item) => (
+                {allNavItems.map((item) => (
                   <NavLink key={item.path} item={item} mobile />
                 ))}
               </nav>
@@ -126,7 +134,7 @@ export default function Layout({ children }) {
 
             {/* Navigation */}
             <nav className="space-y-2">
-              {navItems.map((item) => (
+              {allNavItems.map((item) => (
                 <NavLink key={item.path} item={item} />
               ))}
             </nav>
