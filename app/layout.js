@@ -1,16 +1,24 @@
-import './globals.css'
+import './globals.css';
+import { Inter } from 'next/font/google';
+import { AuthProvider } from '@/contexts/AuthContext';
+import { Toaster } from '@/components/ui/sonner';
+
+const inter = Inter({ subsets: ['latin'] });
 
 export const metadata = {
-  title: 'Next.js MongoDB Template',
-  description: 'A simple template with App Router, MongoDB, and shadcn/ui',
-}
+  title: 'Breakly - Gestion des congés',
+  description: 'Application moderne de gestion des congés pour entreprises',
+};
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body>
-        {children}
+    <html lang="fr">
+      <body className={inter.className}>
+        <AuthProvider>
+          {children}
+          <Toaster />
+        </AuthProvider>
       </body>
     </html>
-  )
+  );
 }
